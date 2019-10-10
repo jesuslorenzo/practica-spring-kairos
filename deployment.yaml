@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jesus-blog
+spec:
+  paused: false
+  selector:
+    matchLabels:
+      app: jesus-blog
+  template:
+    metadata:
+      labels:
+        app: jesus-blog
+    spec:
+      containers:
+      - name: blog
+        image: iridior/practicablog
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+      - name: analizador
+        image: iridior/practicaanalizador
+        imagePullPolicy: Always
+      - name: mysql
+        image: mysql:5.7
+        imagePullPolicy: Always
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: pass
+          - name: MYSQL_DATABASE
+            value: test
+          - name: MYSQL_USER
+            value: admin
+          - name: MYSQL_PASSWORD
+            value: admin
